@@ -24,7 +24,7 @@ $(NAME): $(OBJS) $(HEADERS)
 	@echo "$(YELLOW)Creating executable finished.$(RESET)"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I./include -I./libft -c $< -o $@
 	@echo "$(BLUE) $(CC) $(CFLAGS) -c $< -o $@ $(RESET)"
 	@echo "$(YELLOW)Creating object file finished.$(RESET)"
 

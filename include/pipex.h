@@ -7,6 +7,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include "libft.h"
 
 typedef struct s_pipex
 {
@@ -16,5 +17,8 @@ typedef struct s_pipex
 	char	**cmd_args;
 	char	*cmd_path;
 }	t_pipex;
+
+void	error_exit(char *msg);
+char	*find_command_path(char *cmd, char **envp);
 
 #endif
