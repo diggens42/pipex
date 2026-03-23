@@ -20,5 +20,6 @@ typedef struct s_pipex
 
 void	error_exit(char *msg);
 char	*find_command_path(char *cmd, char **envp);
+char	**parse_cmd(char *arg);
 
 #endif
