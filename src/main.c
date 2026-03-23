@@ -19,6 +19,14 @@ int	main(int argc, char **argv, char **envp)
 		close(pipex.infile);
 		error_exit(argv[4]);
 	}
+	if (pipe(pipex.pipe_fd) == -1)
+	{
+		close(pipex.infile);
+		close(pipex.outfile);
+		error_exit("pipe");
+	}
+	close(pipex.pipe_fd[0]);
+	close(pipex.pipe_fd[1]);
 	close(pipex.infile);
 	close(pipex.outfile);
 	return (0);
