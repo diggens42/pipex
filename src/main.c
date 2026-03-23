@@ -5,6 +5,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipex;
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status;
 
 	if (argc != 5)
 	{
@@ -52,5 +53,9 @@ int	main(int argc, char **argv, char **envp)
 	close(pipex.pipe_fd[1]);
 	close(pipex.infile);
 	close(pipex.outfile);
-	return (0);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }
