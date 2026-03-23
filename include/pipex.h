@@ -21,5 +21,6 @@ typedef struct s_pipex
 void	error_exit(char *msg);
 char	*find_command_path(char *cmd, char **envp);
 char	**parse_cmd(char *arg);
+void	child_one(t_pipex *pipex, char *cmd_arg, char **envp);
 
 #endif

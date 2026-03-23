@@ -3,8 +3,8 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
+	pid_t	pid1;
 
-	(void)envp;
 	if (argc != 5)
 	{
 		write(2, "Usage: ./pipex file1 cmd1 cmd2 file2\n", 36);
@@ -25,6 +25,17 @@ int	main(int argc, char **argv, char **envp)
 		close(pipex.outfile);
 		error_exit("pipe");
 	}
+	pid1 = fork();
+	if (pid1 == -1)
+	{
+		close(pipex.pipe_fd[0]);
+		close(pipex.pipe_fd[1]);
+		close(pipex.infile);
+		close(pipex.outfile);
+		error_exit("fork");
+	}
+	if (pid1 == 0)
+		child_one(&pipex, argv[2], envp);
 	close(pipex.pipe_fd[0]);
 	close(pipex.pipe_fd[1]);
 	close(pipex.infile);
