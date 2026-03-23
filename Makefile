@@ -1,21 +1,13 @@
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
-# CFLAGS	+=	-Ofast
 # CFLAGS	+=	-fsanitize=address -g
 RM		=	rm -rf
 
-NAME	=	ft_ping
-SRCS	=	./src/main.c \
-			./src/init.c \
-			./src/parser.c \
-			./src/resolve.c \
-			./src/socket.c \
-			./src/signal.c \
-			./src/ping.c \
-			./src/utils.c
+NAME	=	pipex
+SRCS	=	./src/main.c
 
 OBJS	=	$(SRCS:.c=.o)
-HEADERS	=	./include/ft_ping.h
+HEADERS	=	./include/pipex.h
 
 LIBFT	=	./libft/libft.a
 
@@ -27,8 +19,8 @@ BLUE		=	\x1b[34m
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS) $(HEADERS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lm -o $@
-	@echo "$(BLUE) $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lm -o $@ $(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
+	@echo "$(BLUE) $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@ $(RESET)"
 	@echo "$(YELLOW)Creating executable finished.$(RESET)"
 
 %.o: %.c
@@ -45,14 +37,12 @@ clean:
 	@$(RM) $(OBJS)
 	@echo "$(RED) $(RM) $(OBJS) $(RESET)"
 	@echo "$(YELLOW)Deleting object files finished.$(RESET)"
-
 	@$(MAKE) clean -C ./libft
 
 fclean: clean
 	@$(RM) $(NAME)
 	@echo "$(RED) $(RM) $(NAME) $(RESET)"
 	@echo "$(YELLOW)Deleting executable finished.$(RESET)"
-
 	@$(MAKE) fclean -C ./libft
 
 re: fclean
