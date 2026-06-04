@@ -12,18 +12,25 @@
 
 #include "../include/pipex.h"
 
+static void init_px(t_px *px, char **argv, char **envp)
+{
+	px->in = -1;
+	px->out = -1;
+	px->fd[0] = -1;
+	px->fd[1] = -1;
+	px->argv = argv;
+	px->envp = envp;
+	px->path = NULL;
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_px	px;
-	int		status;
 
-	// usage will be: file1 cmd1 cmd2 file2
-
+	init_px(&px, argv, envp);
 	if (argc != 5)
-		ft_error("Wrong number of args!\n", ERR_USER);
-
+		ft_error(&px, "Wrong number of args!\n", ERR_USER);
 	
 
 	return (0);
-
 }

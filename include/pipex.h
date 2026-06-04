@@ -27,11 +27,12 @@ typedef struct	s_px {
 	int		in;
 	int		out;
 	int		fd[2];
-	char	**args;
+	char	**argv;
+	char	**envp;
 	char	*path;
 }	t_px;
 
-void	ft_error(char *err_msg, int err);
+void	ft_error(t_px *px, char *err_msg, int err);
 
 
 #endif
