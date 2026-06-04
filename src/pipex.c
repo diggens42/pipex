@@ -1,29 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fwahl <fwahl@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/04 12:21:26 by fwahl             #+#    #+#             */
-/*   Updated: 2026/06/04 12:21:26 by fwahl            ###   ########.fr       */
+/*   Created: 2026/06/04 15:16:10 by fwahl             #+#    #+#             */
+/*   Updated: 2026/06/04 15:16:10 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int main(int argc, char **argv, char **envp)
-{
-	t_px	px;
-	int		status;
-
-	// usage will be: file1 cmd1 cmd2 file2
-
-	if (argc != 5)
-		ft_error("Wrong number of args!\n", ERR_USER);
-
-	
-
-	return (0);
-
-}

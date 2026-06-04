@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/04 12:21:47 by fwahl             #+#    #+#             */
+/*   Updated: 2026/06/04 12:21:47 by fwahl            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -6,7 +18,10 @@
 #include <stdlib.h>	// exit, malloc, free
 #include <stdio.h>	// perror
 #include <string.h>	// strerror
-#include <sys/wait.h> // waitpid, wait
+//#include <sys/wait.h> // waitpid, wait
+#include "../libft/libft.h"
+#define ERR_USER 0
+#define ERR_SYS 1
 
 typedef struct	s_px {
 	int		in;
@@ -15,5 +30,8 @@ typedef struct	s_px {
 	char	**args;
 	char	*path;
 }	t_px;
+
+void	ft_error(char *err_msg, int err);
+
 
 #endif

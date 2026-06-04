@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fwahl <fwahl@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/04 12:21:26 by fwahl             #+#    #+#             */
-/*   Updated: 2026/06/04 12:21:26 by fwahl            ###   ########.fr       */
+/*   Created: 2026/06/04 14:52:54 by fwahl             #+#    #+#             */
+/*   Updated: 2026/06/04 14:52:54 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int main(int argc, char **argv, char **envp)
+void	ft_error(char *err_msg, int err)
 {
-	t_px	px;
-	int		status;
-
-	// usage will be: file1 cmd1 cmd2 file2
-
-	if (argc != 5)
-		ft_error("Wrong number of args!\n", ERR_USER);
-
-	
-
-	return (0);
-
+	if (err == ERR_USER)
+	{
+		ft_putstr_fd(err_msg, ERR_USER);
+		exit(EXIT_FAILURE);
+	}
 }
