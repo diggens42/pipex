@@ -32,7 +32,10 @@ typedef struct	s_px {
 	char	*path;
 }	t_px;
 
+//utils
 void	ft_error(t_px *px, char *err_msg, int err);
+void	ft_free(t_px *px);
+int		ft_file_open(t_px *px, int idx);
 
 
 #endif
