@@ -16,22 +16,43 @@ void	ft_error(t_px *px, char *err_msg, int err)
 {
 	if (err == ERR_USER)
 		ft_putstr_fd(err_msg, ERR_USER);
-	if (err == ERR_SYS)
+	else
 		perror(err_msg);
 	ft_free(px);
 	exit(EXIT_FAILURE);
 }
 
+void	ft_error_cmd(t_px *px, char *cmd, int status)
+{
+	ft_putstr_fd("pipex: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	if (status == 127)
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	else
+		ft_putstr_fd(": permission denied\n", STDERR_FILENO);
+	ft_free(px);
+	exit(status);
+}
+
+static void close_fd(int *fd)
+{
+	if (*fd >= 0)
+		close(*fd);
+	*fd = -1;	
+}
+
 void	ft_free(t_px *px)
 {
-	if (px->in != -1)
-		close(px->in);
-	if (px->out != -1)
-		close(px->out);
-	if (px->fd[0] != -1)
-		close(px->fd[0]);
-	if (px->fd[1] != -1)
-		close(px->fd[1]);
+	close_fd(&px->in);
+	close_fd(&px->out);
+	close_fd(&px->fd[0]);
+	close_fd(&px->fd[1]);
+	if (px->path)
+		free(px->path);
+	px->path = NULL;
+	if (px->args)
+		ft_free_strarray(px->args);
+	px->args = NULL;
 }
 
 int	ft_file_open(t_px *px, int idx)

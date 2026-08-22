@@ -27,7 +27,9 @@ typedef struct	s_px {
 	int		in;
 	int		out;
 	int		fd[2];
+	pid_t	pid[2];
 	char	**argv;
+	char	**args;
 	char	**envp;
 	char	*path;
 }	t_px;
