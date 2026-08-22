@@ -12,6 +12,14 @@
 
 #include "../include/pipex.h"
 
+static void init_file_fds(t_px *px)
+{
+	px->in = ft_file_open(px, 1);
+	px->out = ft_file_open(px, 4);
+	if (pipe(px->fd) == -1)
+		ft_error(px, "Pipe creation failed", ERR_SYS);
+}
+
 static t_px init_px(char **argv, char **envp)
 {
 	t_px	px;
@@ -33,7 +41,7 @@ int main(int argc, char **argv, char **envp)
 	px = init_px(argv, envp);
 	if (argc != 5)
 		ft_error(&px, "Wrong number of args!\n", ERR_USER);
-	
+	init_file_fds(&px);
 	
 
 	return (0);

@@ -23,6 +23,7 @@ void	first_child(t_px *px)
 	pid = fork();
 	if (pid < 0)
 		ft_error(px, "Fork failed", ERR_SYS);
+	else if (pid)
 	else if (pid == 0)
 	{
 		// Child process here
