@@ -13,15 +13,15 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <unistd.h>	// close, read, write, dup, dup2, access, execve, fork, pipe, unlink
-#include <fcntl.h>	// open
-#include <stdlib.h>	// exit, malloc, free
-#include <stdio.h>	// perror
-#include <string.h>	// strerror
+# include <unistd.h>	// close, read, write, dup, dup2, access, execve, fork, pipe, unlink
+# include <fcntl.h>	// open
+# include <stdlib.h>	// exit, malloc, free
+# include <stdio.h>	// perror
+# include <string.h>	// strerror
 //#include <sys/wait.h> // waitpid, wait
 #include "../libft/libft.h"
-#define ERR_USER 0
-#define ERR_SYS 1
+# define ERR_USER 0
+# define ERR_SYS 1
 
 typedef struct	s_px {
 	int		in;
@@ -36,6 +36,7 @@ typedef struct	s_px {
 
 //utils
 void	ft_error(t_px *px, char *err_msg, int err);
+void	ft_error_cmd(t_px *px, char *cmd, int status);
 void	ft_free(t_px *px);
 int		ft_file_open(t_px *px, int idx);
 

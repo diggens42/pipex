@@ -12,21 +12,39 @@
 
 #include "../include/pipex.h"
 
-void	first_child(t_px *px)
+int	ft_file_open(t_px *px, int idx)
 {
-	int	file1_fd;
-	int pipe_fd[2];
-	pid_t pid;
+	int file_fd;
 
-	if (pipe(pipe_fd) == -1)
-		ft_error(px, "Pipe creation failed", ERR_SYS);
-	pid = fork();
-	if (pid < 0)
-		ft_error(px, "Fork failed", ERR_SYS);
-	else if (pid)
-	else if (pid == 0)
+	if (idx == 1)
+		file_fd = open(px->argv[1], O_RDONLY);
+	if (idx == 4)
+		file_fd = open(px->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (file_fd < 0)
+		ft_error(px, "File opening failed on index " + idx, ERR_SYS);
+	return (file_fd);
+}
+
+static void	ft_child_io(t_px *px, int idx)
+{
+	if (idx == 0)
 	{
-		// Child process here
-		close(pipe_fd[0]);
+
+	}
+	else
+	{
+
+	}
+	ft_free(px);
+}
+
+void	ft_child(t_px *px, int idx)
+{
+	px->pid[idx] = fork();
+	if (px->pid[idx] == -1)
+		ft_error(px, "Fork failed on index " + idx, ERR_SYS);
+	if (px->pid[idx] == 0)
+	{
+		
 	}
 }
