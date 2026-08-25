@@ -38,7 +38,11 @@ typedef struct	s_px {
 void	ft_error(t_px *px, char *err_msg, int err);
 void	ft_error_cmd(t_px *px, char *cmd, int status);
 void	ft_free(t_px *px);
+
+//pipex
 int		ft_file_open(t_px *px, int idx);
+void	ft_child(t_px *px, int idx);
+void	ft_exec_cmd(t_px *px, char *cmd);
 
 
 #endif

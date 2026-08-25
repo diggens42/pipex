@@ -48,6 +48,7 @@ void	ft_child(t_px *px, int idx)
 		ft_error(px, "Fork failed on index " + idx, ERR_SYS);
 	if (px->pid[idx] == 0)
 	{
-		
+		ft_child_io(px, idx);
+		ft_exec_cmd(px, px->argv[idx + 2]);
 	}
 }
