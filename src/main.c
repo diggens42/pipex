@@ -28,9 +28,12 @@ static t_px init_px(char **argv, char **envp)
 	px.out = -1;
 	px.fd[0] = -1;
 	px.fd[1] = -1;
+	px.pid[0] = -1;
+	px.pid[1] = -1;
 	px.argv = argv;
 	px.envp = envp;
 	px.path = NULL;
+	px.args = NULL;
 	return (px);
 }
 
@@ -40,7 +43,7 @@ int main(int argc, char **argv, char **envp)
 
 	px = init_px(argv, envp);
 	if (argc != 5)
-		ft_error(&px, "Wrong number of args!\n", ERR_USER);
+		ft_error(&px, "Usage: ./pipex file1 cmd1 cmd2 file2\n", ERR_USER);
 	init_file_fds(&px);
 	
 

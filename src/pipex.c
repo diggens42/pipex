@@ -29,11 +29,14 @@ static void	ft_child_io(t_px *px, int idx)
 {
 	if (idx == 0)
 	{
-
+		if (dup2(px->in, STDIN_FILENO) == -1
+			|| dup2(px->fd[1], STDOUT_FILENO) == -1)
+			ft_error(px, "dup2", ERR_SYS);
 	}
 	else
 	{
-
+		if (dup2(px->out, STDOUT_FILENO) == -1)
+			ft_error(px, "dup2", ERR_SYS);
 	}
 	ft_free(px);
 }
