@@ -19,7 +19,7 @@
 # include <stdio.h>	// perror
 # include <string.h>	// strerror
 //#include <sys/wait.h> // waitpid, wait
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 # define ERR_USER 0
 # define ERR_SYS 1
 
@@ -40,9 +40,11 @@ void	ft_error_cmd(t_px *px, char *cmd, int status);
 void	ft_free(t_px *px);
 
 //pipex
-int		ft_file_open(t_px *px, int idx);
 void	ft_child(t_px *px, int idx);
 void	ft_exec_cmd(t_px *px, char *cmd);
 
+//file
+char	*ft_find_path(t_px *px);
+void 	init_file_fds(t_px *px);
 
 #endif

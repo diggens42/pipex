@@ -12,17 +12,20 @@
 
 #include "../include/pipex.h"
 
-int	ft_file_open(t_px *px, int idx)
+static void	ft_exec_cmd(t_px *px, char *cmd)
 {
-	int file_fd;
-
-	if (idx == 1)
-		file_fd = open(px->argv[1], O_RDONLY);
-	if (idx == 4)
-		file_fd = open(px->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (file_fd < 0)
-		ft_error(px, "File opening failed on index " + idx, ERR_SYS);
-	return (file_fd);
+	px->args = ft_split(cmd, ' ');
+	if (!px->args)
+		ft_error(px,"malloc failed in ft_exec_cmd", ERR_SYS);
+	if (!px->args[0])
+		ft_error(px, cmd, 127);
+	px->path = ft_find_path(px);
+	if (!px->path || access(px->path, F_OK) != 0)
+		ft_error_cmd(px, px->args[0], 127);
+	if (access(px->path, X_OK) != 0)
+		ft_error_cmd(px, px->args[0], 126);
+	execve(px->path, px->args, px->envp);
+	ft_error(px, px->args[0], ERR_SYS);
 }
 
 static void	ft_child_io(t_px *px, int idx)
