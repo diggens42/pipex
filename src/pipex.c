@@ -12,13 +12,28 @@
 
 #include "../include/pipex.h"
 
-static void	ft_exec_cmd(t_px *px, char *cmd)
+int wait_childs(t_px *px)
 {
-	px->args = ft_split(cmd, ' ');
+	int temp_status;
+	int status;
+
+	temp_status = 0;
+	status = 0;
+	waitpid(px->pid[0], NULL, 0);
+	waitpid(px->pid[1], &temp_status, 0);
+	if (WIFEXITED(temp_status))
+		status = WEXITSTATUS(temp_status);
+	else if (WIFSIGNALED(temp_status))
+		status = 128 + WTERMSIG(temp_status);
+	return (status);
+}
+static void	ft_exec_cmd(t_px *px)
+{
+	px->args = ft_split(px->argv[px->idx +2], ' ');
 	if (!px->args)
 		ft_error(px,"malloc failed in ft_exec_cmd", ERR_SYS);
 	if (!px->args[0])
-		ft_error(px, cmd, 127);
+		ft_error(px, px->argv[px->idx + 2], 127);
 	px->path = ft_find_path(px);
 	if (!px->path || access(px->path, F_OK) != 0)
 		ft_error_cmd(px, px->args[0], 127);
@@ -28,9 +43,9 @@ static void	ft_exec_cmd(t_px *px, char *cmd)
 	ft_error(px, px->args[0], ERR_SYS);
 }
 
-static void	ft_child_io(t_px *px, int idx)
+static void	ft_child_io(t_px *px)
 {
-	if (idx == 0)
+	if (px->idx == 0)
 	{
 		if (dup2(px->in, STDIN_FILENO) == -1
 			|| dup2(px->fd[1], STDOUT_FILENO) == -1)
@@ -44,14 +59,15 @@ static void	ft_child_io(t_px *px, int idx)
 	ft_free(px);
 }
 
-void	ft_child(t_px *px, int idx)
+void	ft_pipex(t_px *px, int idx)
 {
+	px->idx = idx;
 	px->pid[idx] = fork();
 	if (px->pid[idx] == -1)
 		ft_error(px, "Fork failed on index " + idx, ERR_SYS);
 	if (px->pid[idx] == 0)
 	{
-		ft_child_io(px, idx);
-		ft_exec_cmd(px, px->argv[idx + 2]);
+		ft_child_io(px);
+		ft_exec_cmd(px);
 	}
 }

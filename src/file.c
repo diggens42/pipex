@@ -12,7 +12,7 @@
 
 #include "../include/pipex.h"
 
-static char *ft_get_env_path(char **envp)
+static char *get_env_path(char **envp)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static char *ft_get_env_path(char **envp)
 	return (envp[i] + 5);
 }
 
-static char	*ft_join_path(char *dir, char *cmd)
+static char	*join_path(char *dir, char *cmd)
 {
 	char *temp;
 	char *full_path;
@@ -37,32 +37,31 @@ static char	*ft_join_path(char *dir, char *cmd)
 	return (full_path);
 }
 
-char	*ft_find_path(t_px *px)
+char	*find_path(t_px *px)
 {
 	char	**dir_paths;
 	char	*full_path;
 	int		i;
 
-	if (ft_strchr(px->args[0], '/') || !ft_get_env_path(px->envp))
+	if (ft_strchr(px->args[0], '/') || !get_env_path(px->envp))
 		return (ft_strdup(px->args[0]));
-	dir_paths = ft_split(ft_get_env_path(px->envp), ':');
+	dir_paths = ft_split(get_env_path(px->envp), ':');
 	if (!dir_paths)
 		ft_error(px, "malloc failed in ft_find_path", ERR_SYS);
 	full_path = NULL;
 	i = -1;
 	while (dir_paths[++i])
 	{
-		full_path = ft_join_path(dir_paths[i], px->args[0]);
+		full_path = join_path(dir_paths[i], px->args[0]);
 		if (full_path && access(full_path, X_OK) == 0)
 			break ;
 		free(full_path);
 		full_path = NULL;
 	}
-	ft_free_strarray(dir_paths);
 	return (ft_free_strarray(dir_paths), full_path);
 }
 
-static int	ft_file_open(t_px *px, int idx)
+static int	file_open(t_px *px, int idx)
 {
 	int file_fd;
 
@@ -77,8 +76,8 @@ static int	ft_file_open(t_px *px, int idx)
 
 void init_file_fds(t_px *px)
 {
-	px->in = ft_file_open(px, 1);
-	px->out = ft_file_open(px, 4);
+	px->in = file_open(px, 1);
+	px->out = file_open(px, 4);
 	if (pipe(px->fd) == -1)
 		ft_error(px, "Pipe creation failed", ERR_SYS);
 }

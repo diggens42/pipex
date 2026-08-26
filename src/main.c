@@ -12,22 +12,6 @@
 
 #include "../include/pipex.h"
 
-static int wait_childs(t_px *px)
-{
-	int temp_status;
-	int status;
-
-	temp_status = 0;
-	status = 0;
-	waitpid(px->pid[0], NULL, 0);
-	waitpid(px->pid[1], &temp_status, 0);
-	if (WIFEXITED(temp_status))
-		status = WEXITSTATUS(temp_status);
-	else if (WIFSIGNALED(temp_status))
-		status = 128 + WTERMSIG(temp_status);
-	return (status);
-}
-
 static t_px init_px(char **argv, char **envp)
 {
 	t_px	px;
@@ -38,6 +22,7 @@ static t_px init_px(char **argv, char **envp)
 	px.fd[1] = -1;
 	px.pid[0] = -1;
 	px.pid[1] = -1;
+	px.idx = -1;
 	px.argv = argv;
 	px.envp = envp;
 	px.path = NULL;
@@ -53,8 +38,8 @@ int main(int argc, char **argv, char **envp)
 	if (argc != 5)
 		ft_error(&px, "Usage: ./pipex file1 cmd1 cmd2 file2\n", ERR_USER);
 	init_file_fds(&px);
-	ft_child(&px, 0);
-	ft_child(&px, 1);
+	ft_pipex(&px, 0);
+	ft_pipex(&px, 1);
 	ft_free(&px);
 	return (wait_childs(&px));
 }

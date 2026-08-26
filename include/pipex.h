@@ -26,6 +26,7 @@
 typedef struct	s_px {
 	int		in;
 	int		out;
+	int		idx;
 	int		fd[2];
 	pid_t	pid[2];
 	char	**argv;
@@ -40,8 +41,8 @@ void	ft_error_cmd(t_px *px, char *cmd, int status);
 void	ft_free(t_px *px);
 
 //pipex
-void	ft_child(t_px *px, int idx);
-void	ft_exec_cmd(t_px *px, char *cmd);
+void	ft_pipex(t_px *px, int idx);
+int 	wait_childs(t_px *px);
 
 //file
 char	*ft_find_path(t_px *px);
