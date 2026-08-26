@@ -12,10 +12,10 @@
 
 #include "../include/pipex.h"
 
-int wait_childs(t_px *px)
+int	wait_childs(t_px *px)
 {
-	int temp_status;
-	int status;
+	int	temp_status;
+	int	status;
 
 	temp_status = 0;
 	status = 0;
@@ -27,11 +27,12 @@ int wait_childs(t_px *px)
 		status = 128 + WTERMSIG(temp_status);
 	return (status);
 }
+
 static void	ft_exec_cmd(t_px *px)
 {
 	px->args = ft_split(px->argv[px->idx +2], ' ');
 	if (!px->args)
-		ft_error(px,"malloc failed in ft_exec_cmd", ERR_SYS);
+		ft_error(px, "malloc failed in ft_exec_cmd", ERR_SYS);
 	if (!px->args[0])
 		ft_error(px, px->argv[px->idx + 2], 127);
 	px->path = ft_find_path(px);
@@ -53,7 +54,8 @@ static void	ft_child_io(t_px *px)
 	}
 	else
 	{
-		if (dup2(px->out, STDOUT_FILENO) == -1)
+		if (dup2(px->fd[0], STDIN_FILENO) == -1
+			|| dup2(px->out, STDOUT_FILENO) == -1)
 			ft_error(px, "dup2", ERR_SYS);
 	}
 	ft_free(px);

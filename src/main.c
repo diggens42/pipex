@@ -12,7 +12,7 @@
 
 #include "../include/pipex.h"
 
-static t_px init_px(char **argv, char **envp)
+static t_px	init_px(char **argv, char **envp)
 {
 	t_px	px;
 
@@ -30,7 +30,7 @@ static t_px init_px(char **argv, char **envp)
 	return (px);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_px	px;
 

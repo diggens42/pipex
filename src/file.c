@@ -12,7 +12,7 @@
 
 #include "../include/pipex.h"
 
-static char *get_env_path(char **envp)
+static char	*get_env_path(char **envp)
 {
 	int	i;
 
@@ -26,8 +26,8 @@ static char *get_env_path(char **envp)
 
 static char	*join_path(char *dir, char *cmd)
 {
-	char *temp;
-	char *full_path;
+	char	*temp;
+	char	*full_path;
 
 	temp = ft_strjoin(dir, "/");
 	if (!temp)
@@ -63,18 +63,18 @@ char	*find_path(t_px *px)
 
 static int	file_open(t_px *px, int idx)
 {
-	int file_fd;
+	int	file_fd;
 
 	if (idx == 1)
 		file_fd = open(px->argv[1], O_RDONLY);
-	if (idx == 4)
+	else
 		file_fd = open(px->argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file_fd < 0)
-		ft_error(px, "File opening failed on index " + idx, ERR_SYS);
+		ft_error(px, px->argv[idx], ERR_SYS);
 	return (file_fd);
 }
 
-void init_file_fds(t_px *px)
+void	init_file_fds(t_px *px)
 {
 	px->in = file_open(px, 1);
 	px->out = file_open(px, 4);
