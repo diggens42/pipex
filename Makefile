@@ -14,6 +14,9 @@ HEADERS	=	./include/pipex.h
 
 LIBFT	=	./libft/libft.a
 
+TESTER			=       ./pipex_tester
+TESTER_URL		=       https://github.com/diggens42/pipex_tester.git
+
 RESET	=	\x1b[0m
 RED		=	\x1b[31m
 YELLOW	=	\x1b[33m
@@ -36,6 +39,19 @@ $(LIBFT):
 	@git submodule update --remote
 	@$(MAKE) -C ./libft
 
+test: all
+	@if [ -d $(TESTER) ]; then \
+			git -C $(TESTER) pull --quiet; \
+	else \
+			git clone --quiet $(TESTER_URL) $(TESTER); \
+	fi
+	@bash $(TESTER)/tester.sh ./$(NAME)
+
+testclean:
+	@$(RM) $(TESTER)
+	@echo "$(RED) $(RM) $(TESTER) $(RESET)"
+	@echo "$(YELLOW)Deleting tester finished.$(RESET)"
+
 clean:
 	@$(RM) $(OBJS)
 	@echo "$(RED) $(RM) $(OBJS) $(RESET)"
@@ -51,4 +67,4 @@ fclean: clean
 re: fclean
 	@$(MAKE) all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test testclean

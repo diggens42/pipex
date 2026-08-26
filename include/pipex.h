@@ -47,7 +47,6 @@ int		wait_childs(t_px *px);
 
 //file
 char	*find_path(t_px *px);
-void	init_file_fds(t_px *px);
 int		file_open(t_px *px, int idx);
 
 #endif

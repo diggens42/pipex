@@ -37,8 +37,8 @@ int	main(int argc, char **argv, char **envp)
 	px = init_px(argv, envp);
 	if (argc != 5)
 		ft_error(&px, "Usage: ./pipex file1 cmd1 cmd2 file2\n", ERR_USER);
-	if (pipe(px->fd) == -1)
-		ft_error(px, "Pipe creation failed", ERR_SYS);
+	if (pipe(px.fd) == -1)
+		ft_error(&px, "Pipe creation failed", ERR_SYS);
 	ft_pipex(&px, 0);
 	ft_pipex(&px, 1);
 	ft_free(&px);
