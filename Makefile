@@ -52,7 +52,7 @@ testclean:
 	@echo "$(RED) $(RM) $(TESTER) $(RESET)"
 	@echo "$(YELLOW)Deleting tester finished.$(RESET)"
 
-clean:
+clean: testclean
 	@$(RM) $(OBJS)
 	@echo "$(RED) $(RM) $(OBJS) $(RESET)"
 	@echo "$(YELLOW)Deleting object files finished.$(RESET)"

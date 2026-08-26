@@ -127,7 +127,6 @@ src/pipex.c         forking, child redirection, execve, waiting
 src/file.c          PATH lookup and opening the two files
 src/utils.c         cleanup and the error exits
 libft/              my own C library, pulled in as a git submodule
-Dockerfile.dev      Debian image for building and testing on Linux
 ```
 
 ### Scope
@@ -190,17 +189,7 @@ two output files, which is exactly what the tester below does.
 
 ### Testing
 
-Because the project is graded on Linux and I develop on Windows, the repository ships a
-`Dockerfile.dev` with `build-essential`, `valgrind` and `norminette` already installed.
-It deliberately runs as a non-root user, since `chmod 000` does not stop root and every
-permission-related test would silently pass:
-
-```bash
-docker build -f Dockerfile.dev -t pipex-dev .
-docker run --rm -it -v "$PWD":/pipex pipex-dev
-```
-
-I also wrote my own test suite, which lives in a separate repository:
+I wrote my own test suite, which lives in a separate repository:
 **[pipex_tester](https://github.com/diggens42/pipex_tester)**. The `Makefile` knows how to
 fetch and run it:
 
@@ -227,7 +216,9 @@ pipeline in bash — and the shell is the reference. Five things are then compar
 | `mem` | valgrind, with leaks and unclosed descriptors tracked across forks |
 
 The 55 cases are grouped into basic pipelines, file errors, command errors, invocation,
-PATH handling, memory and descriptors, and waiting.
+PATH handling, memory and descriptors, and waiting. The suite needs nothing beyond a
+normal Linux or macOS shell; if `valgrind` is not installed it says so and skips the nine
+memory cases instead of failing them, so it still gives a useful result on any machine.
 
 The `mem` column is the part that took the most work. Every other pipex tester I tried
 reported leaks for a correct program, because `ls`, `cat` and `wc` do not free their own
