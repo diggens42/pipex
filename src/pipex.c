@@ -34,8 +34,8 @@ static void	ft_exec_cmd(t_px *px)
 	if (!px->args)
 		ft_error(px, "malloc failed in ft_exec_cmd", ERR_SYS);
 	if (!px->args[0])
-		ft_error(px, px->argv[px->idx + 2], 127);
-	px->path = ft_find_path(px);
+		ft_error_cmd(px, px->argv[px->idx + 2], 127);
+	px->path = find_path(px);
 	if (!px->path || access(px->path, F_OK) != 0)
 		ft_error_cmd(px, px->args[0], 127);
 	if (access(px->path, X_OK) != 0)
@@ -48,12 +48,14 @@ static void	ft_child_io(t_px *px)
 {
 	if (px->idx == 0)
 	{
+		px->in = file_open(px, 1);
 		if (dup2(px->in, STDIN_FILENO) == -1
 			|| dup2(px->fd[1], STDOUT_FILENO) == -1)
 			ft_error(px, "dup2", ERR_SYS);
 	}
 	else
 	{
+		px->out = file_open(px, 4);
 		if (dup2(px->fd[0], STDIN_FILENO) == -1
 			|| dup2(px->out, STDOUT_FILENO) == -1)
 			ft_error(px, "dup2", ERR_SYS);
@@ -66,7 +68,7 @@ void	ft_pipex(t_px *px, int idx)
 	px->idx = idx;
 	px->pid[idx] = fork();
 	if (px->pid[idx] == -1)
-		ft_error(px, "Fork failed on index " + idx, ERR_SYS);
+		ft_error(px, "fork", ERR_SYS);
 	if (px->pid[idx] == 0)
 	{
 		ft_child_io(px);

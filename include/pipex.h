@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
-//#include <sys/wait.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # define ERR_USER 0
 # define ERR_SYS 1
@@ -48,5 +48,6 @@ int		wait_childs(t_px *px);
 //file
 char	*find_path(t_px *px);
 void	init_file_fds(t_px *px);
+int		file_open(t_px *px, int idx);
 
 #endif

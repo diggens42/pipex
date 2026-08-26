@@ -61,7 +61,7 @@ char	*find_path(t_px *px)
 	return (ft_free_strarray(dir_paths), full_path);
 }
 
-static int	file_open(t_px *px, int idx)
+int	file_open(t_px *px, int idx)
 {
 	int	file_fd;
 
@@ -72,12 +72,4 @@ static int	file_open(t_px *px, int idx)
 	if (file_fd < 0)
 		ft_error(px, px->argv[idx], ERR_SYS);
 	return (file_fd);
-}
-
-void	init_file_fds(t_px *px)
-{
-	px->in = file_open(px, 1);
-	px->out = file_open(px, 4);
-	if (pipe(px->fd) == -1)
-		ft_error(px, "Pipe creation failed", ERR_SYS);
 }
